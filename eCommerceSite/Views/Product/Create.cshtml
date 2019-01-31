@@ -4,6 +4,9 @@
 }
 
 <h1>Create</h1>
+@if (ViewData["Message"] != null) {
+<h2 class="text-lg-left">@ViewData["Message"]</h2>
+}
 
 <form asp-action="Create">
 
@@ -12,14 +15,14 @@
     <span asp-validation-for="Name" class="text-danger"></span>
     <br />
 
-    <label asp-for="Category"></label>
-    <input asp-for="Category" />
-    <span asp-validation-for="Category" class="text-danger"></span>
-    <br />
-
     <label asp-for="Description"></label>
     <input asp-for="Description" />
     <span asp-validation-for="Description" class="text-danger"></span>
+    <br />
+
+    <label asp-for="Category"></label>
+    <input asp-for="Category" />
+    <span asp-validation-for="Category" class="text-danger"></span>
     <br />
 
     <label asp-for="Price"></label>
@@ -30,3 +33,9 @@
     <input type="submit" value="Add Product" />
 
 </form>
+
+@section Scripts {
+    @{ 
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

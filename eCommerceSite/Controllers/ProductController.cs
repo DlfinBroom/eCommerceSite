@@ -7,8 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerceSite.Controllers {
     public class ProductController : Controller {
+
+        private readonly CommerceContext context;
+
+        public ProductController(CommerceContext dbContext) {
+            context = dbContext;
+        }
+
         public IActionResult Index() {
-            return View();
+            List<Product> products = ProductDB.GetProducts(context);
+            return View(products);
         }
 
         [HttpGet]
@@ -18,7 +26,8 @@ namespace eCommerceSite.Controllers {
         [HttpPost]
         public IActionResult Create(Product pro) {
             if (ModelState.IsValid) {
-                // Add to DB
+                ProductDB.AddProduct(pro, context);
+                ViewData["Massage"] = pro.Name + " was added!";
                 return View();
             }
 

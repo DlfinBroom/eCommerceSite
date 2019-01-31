@@ -19,7 +19,7 @@ namespace eCommerceSite.Models {
         [Required]
         public string Category { get; set; }
 
-        [Required, Range(0, 1000000)]
+        [Required, Range(0, 1000000), DataType(DataType.Currency)]
         public double Price { get; set; }
 
     }

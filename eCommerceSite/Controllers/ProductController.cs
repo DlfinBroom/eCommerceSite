@@ -48,5 +48,18 @@ namespace eCommerceSite.Controllers {
             }
             return View(pro);
         }
+
+        [HttpGet]
+        public IActionResult Delete(int id) {
+            Product pro = ProductDB.GetProduct(id, context);
+            return View(pro);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirm(int id) {
+            Product pro = ProductDB.GetProduct(id, context);
+            context.products.Remove(pro);
+            context.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

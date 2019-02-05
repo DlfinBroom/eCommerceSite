@@ -15,5 +15,12 @@ namespace eCommerceSite.Models {
         public static List<Product> GetProducts(CommerceContext context) {
             return context.products.ToList();
         }
+
+        public static Product GetProduct(int id, CommerceContext context) {
+            Product pro = (from p in context.products
+                           where p.ProductID == id
+                           select p).Single();
+            return pro;
+        }
     }
 }

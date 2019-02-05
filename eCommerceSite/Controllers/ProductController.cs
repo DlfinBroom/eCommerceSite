@@ -33,5 +33,20 @@ namespace eCommerceSite.Controllers {
 
             return View(pro);
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id) {
+            Product pro = ProductDB.GetProduct(id, context);
+            return View(pro);
+        }
+        [HttpPost]
+        public IActionResult Edit(Product pro) {
+            if (ModelState.IsValid) {
+                context.Update(pro);
+                context.SaveChanges();
+                ViewData["Message"] = "Product Updated!";
+            }
+            return View(pro);
+        }
     }
 }

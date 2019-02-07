@@ -20,4 +20,11 @@ namespace eCommerceSite.Models {
         [Key] // 'Primary' Key
         public int MemberID { get; set; }
     }
+
+    public class LoginViewModel {
+        public string Email { get; set; }
+        public string Password { get; set; }
+
+
+    }
 }

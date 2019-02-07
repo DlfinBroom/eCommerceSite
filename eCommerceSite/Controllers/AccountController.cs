@@ -32,5 +32,10 @@ namespace eCommerceSite.Controllers {
             // Returning the save view with error msg
             return View(mem);
         }
+
+        [HttpGet]
+        public IActionResult Login() {
+            return View();
+        }
     }
 }

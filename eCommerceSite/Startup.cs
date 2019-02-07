@@ -28,6 +28,13 @@ namespace eCommerceSite {
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Set up session managment
+            services.AddDistributedMemoryCache(); // stores session in memory
+            // Configure session options
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromSeconds(15);
+            });
+
             string con = Configuration.GetConnectionString("commercedb");
             services.AddDbContext<CommerceContext>(options => options.UseSqlServer(con));
 
@@ -48,6 +55,7 @@ namespace eCommerceSite {
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession(); // Use out session middleware
 
             app.UseMvc(routes => {
                 routes.MapRoute(

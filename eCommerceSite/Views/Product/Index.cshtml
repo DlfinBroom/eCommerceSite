@@ -35,8 +35,26 @@
                     @Html.DisplayFor(m => product.Category)
                 </td>
                 <td>
-                    <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@product.ProductID">Edit Product</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@product.ProductID">Delete Product</a>
+                    <a class="btn btn-secondary" 
+                       asp-action="Edit" 
+                       asp-route-id="@product.ProductID"
+                       >Edit Product</a>
+
+                    <a class="btn btn-danger" 
+                       asp-action="Delete" 
+                       asp-route-id="@product.ProductID"
+                       >Delete Product</a>
+
+                    <a class="btn btn-primary" 
+                       asp-action="Add" 
+                       asp-controller="Cart" 
+                       asp-route-id="@product.ProductID"
+                       >Add to Cart</a>
+
+                    <form>
+                        <input type="hidden" value="@product.ProductID" />
+                        <input type="submit" value="Add to Cart" />
+                    </form>
                 </td>
             </tr>
         }

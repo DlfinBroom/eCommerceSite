@@ -34,7 +34,8 @@ namespace eCommerceSite {
             services.AddDistributedMemoryCache(); // stores session in memory
             // Configure session options
             services.AddSession(options => {
-                options.IdleTimeout = TimeSpan.FromSeconds(15);
+                options.IdleTimeout = TimeSpan.FromMinutes(15);
+                options.Cookie.IsEssential = true;
             });
 
             string con = Configuration.GetConnectionString("commercedb");

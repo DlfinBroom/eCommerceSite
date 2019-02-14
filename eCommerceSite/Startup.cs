@@ -28,6 +28,8 @@ namespace eCommerceSite {
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSingulation<IHttpContextAsccessor, HttpContextAccessor>();
+
             // Set up session managment
             services.AddDistributedMemoryCache(); // stores session in memory
             // Configure session options

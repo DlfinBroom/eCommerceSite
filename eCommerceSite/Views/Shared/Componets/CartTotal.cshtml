@@ -1,0 +1,12 @@
+﻿@using Newtonsoft.Json;
+@{ 
+    namespace eCommerceSite {
+        public class CartTotalViewComponent : ViewComponent {
+            public async Task<int> Invoke() {
+                string data = HttpContext.Request.Cookies["Cart"];
+                List<Product> pro = JsonConvert.DeserializeObject<List<Product>>(data);
+                return pro.Count;
+            }
+        }
+    }
+}

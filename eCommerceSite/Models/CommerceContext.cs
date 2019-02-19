@@ -9,7 +9,7 @@ namespace eCommerceSite.Models {
         public CommerceContext (DbContextOptions<CommerceContext> options) : base(options) { }
         
         // Add all Models (classes) as a DbSet that needs to be tracked by the Database
-        public DbSet<Member> members { get; set; }
-        public DbSet<Product> products { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }

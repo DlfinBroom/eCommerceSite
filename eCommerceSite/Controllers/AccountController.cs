@@ -24,7 +24,7 @@ namespace eCommerceSite.Controllers {
         public IActionResult Register(Member mem) {
             if (ModelState.IsValid) {
                 MemberDB.AddMember(mem, _context);
-                HttpContext.Session.SetInt32("Id", m.MemberId);
+                HttpContext.Session.SetInt32("Id", mem.MemberId);
 
                 return RedirectToAction("Index", "Home");
             }
@@ -39,13 +39,13 @@ namespace eCommerceSite.Controllers {
         [HttpPost]
         public IActionResult Login(LoginViewModel model) {
             if (ModelState.IsValid) {
-                Member member = (from m in _context.members
+                Member member = (from m in _context.Members
                                  where m.Email == model.Email &&
                                        m.Password == model.Password
                                  select m).SingleOrDefault();
 
                 if(member != null) {
-                    HttpContext.Session.SetInt32("Id", member.MemberID);
+                    HttpContext.Session.SetInt32("Id", member.MemberId);
                     return RedirectToAction("Index", "Home");
                 }
                 else {

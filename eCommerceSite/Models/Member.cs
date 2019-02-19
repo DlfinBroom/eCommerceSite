@@ -6,25 +6,32 @@ using System.Threading.Tasks;
 
 namespace eCommerceSite.Models {
     public class Member {
-
-        [Required] // Data Annotations
+        //Data Annotations - Validation and DB markup
+        [Required]
         public string UserName { get; set; }
 
-        [Required, DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Required, EmailAddress]
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
-        // Int is automatically required
-        [Key] // 'Primary' Key
-        public int MemberID { get; set; }
+        //int is automatically required because
+        //it is a value type
+        [Key] //Mark this field as PK (Primary Key)
+        public int MemberId { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)] //Enum/Enumeration
+        public string Password { get; set; }
+
     }
 
     public class LoginViewModel {
+        [Required]
         public string Email { get; set; }
-        public string Password { get; set; }
 
+        [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
 
     }
 }

@@ -57,7 +57,7 @@ namespace eCommerceSite.Controllers {
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirm(int id) {
             Product pro = ProductDB.GetProduct(id, context);
-            context.products.Remove(pro);
+            context.Products.Remove(pro);
             context.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -1,5 +1,6 @@
 ﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor SessionData
 @using Microsoft.AspNetCore.Http
+@using eCommerceSite.Models
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,7 +42,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        @if (SessionData.HttpContext.Session.GetInt32("Id").HasValue) {
+                        @if (SessionHelper.IsUserLogedIn(SessionData)) {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Logout</a>
                             </li>
@@ -67,8 +68,11 @@
         <partial name="_CookieConsentPartial" />
 
         <span class="fas fa-shopping-cart">
-            @section cart{
-                @Component.InvokeAsync("CartTotal")
+            @{
+                int total = SessionHelper.GetCartTotal(SessionData);
+            }
+            @if (total == 0) {
+                <text>Empty</text>
             }
         </span>
 

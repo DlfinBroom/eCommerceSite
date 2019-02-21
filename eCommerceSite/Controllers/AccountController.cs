@@ -10,9 +10,11 @@ namespace eCommerceSite.Controllers {
     public class AccountController : Controller {
 
         private readonly CommerceContext _context;
+        private readonly IHttpContextAccessor _accessor;
 
-        public AccountController(CommerceContext context) {
+        public AccountController(CommerceContext context, IHttpContextAccessor accessor) {
             _context = context;
+            _accessor = accessor;
         }
 
         [HttpGet]
@@ -24,7 +26,7 @@ namespace eCommerceSite.Controllers {
         public IActionResult Register(Member mem) {
             if (ModelState.IsValid) {
                 MemberDB.AddMember(mem, _context);
-                HttpContext.Session.SetInt32("Id", mem.MemberId);
+                SessionHelper.LogUserIn(mem.MemberId, _accessor);
 
                 return RedirectToAction("Index", "Home");
             }
@@ -45,6 +47,7 @@ namespace eCommerceSite.Controllers {
                                  select m).SingleOrDefault();
 
                 if(member != null) {
+                    SessionHelper.LogUserIn(member.MemberId, _accessor);
                     HttpContext.Session.SetInt32("Id", member.MemberId);
                     return RedirectToAction("Index", "Home");
                 }

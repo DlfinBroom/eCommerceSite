@@ -22,5 +22,13 @@ namespace eCommerceSite.Models {
                            select p).Single();
             return pro;
         }
+
+        public static List<Product> GetProductsByPage(int pageNum, int pageSize, CommerceContext context) {
+            return context.Products
+                .OrderBy(p => p.Name)
+                .Skip((pageNum - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
     }
 }

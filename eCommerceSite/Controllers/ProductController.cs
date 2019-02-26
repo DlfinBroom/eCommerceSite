@@ -14,8 +14,15 @@ namespace eCommerceSite.Controllers {
             context = dbContext;
         }
 
-        public IActionResult Index() {
-            List<Product> products = ProductDB.GetProducts(context);
+        // Id == Page#
+        public IActionResult Index(int? id) {
+            // List<Product> products = ProductDB.GetProducts(context);
+
+            int pageNum = (id.HasValue) ? id.Value : 1;
+            const int PageSize = 3;
+
+            List<Product> products = ProductDB.GetProductsByPage(pageNum, PageSize, context);
+
             return View(products);
         }
 

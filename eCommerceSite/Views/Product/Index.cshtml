@@ -57,3 +57,44 @@
     </tbody>
 </table>
 
+<ul class="pagination">
+    @*Next*@
+    @if (1 == (int)ViewData["CurrPageNum"]) {
+        <li class="page-item active">
+            <span class="page-link">Previous</span>
+        </li>
+    }
+    else {
+        int previousPage = (int)ViewData["CurrPageNum"] - 1;
+        <li class="page-item">
+            <a class="page-link" asp-action="Index" asp-route-id="@previousPage">Previous</a>
+        </li>
+    }
+
+    @*All Pages*@
+    @for (int a = 1; a <= (int)ViewData["MaxPage"]; a++) {
+        if (a == (int)ViewData["CurrPageNum"]) {
+            <li class="page-item active">
+                <span class="page-link">@a</span>
+            </li>
+        }
+        else {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-route-id="@a">@a</a>
+            </li>
+        }
+    }
+
+    @*Next*@
+    @if ((int)ViewData["CurrPageNum"] == (int)ViewData["MaxPage"]) {
+        <li class="page-item active">
+            <span class="page-link">Next</span>
+        </li>
+    }
+    else {
+        int nextPage = (int)ViewData["CurrPageNum"] + 1;
+        <li class="page-item">
+            <a class="page-link" asp-action="Index" asp-route-id="@nextPage">Next</a>
+        </li>
+    }
+</ul>

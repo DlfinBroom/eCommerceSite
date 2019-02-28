@@ -30,5 +30,20 @@ namespace eCommerceSite.Models {
                 .Take(pageSize)
                 .ToList();
         }
+
+        /// <summary>
+        /// Returns the total number of pages needed 
+        /// to display all products given the page size
+        /// </summary>
+        public static int GetMaxPage(CommerceContext context, int pageSize) {
+            int numProducts = (from p in context.Products
+                               select p).Count();
+            if( numProducts % pageSize != 0) {
+                return 1 + (numProducts / pageSize);
+            }
+            else {
+                return numProducts / pageSize;
+            }
+        }
     }
 }

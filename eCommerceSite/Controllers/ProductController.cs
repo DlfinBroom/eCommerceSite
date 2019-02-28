@@ -23,6 +23,9 @@ namespace eCommerceSite.Controllers {
 
             List<Product> products = ProductDB.GetProductsByPage(pageNum, PageSize, context);
 
+            ViewData["MaxPage"] = ProductDB.GetMaxPage(context, PageSize);
+            ViewData["CurrPageNum"] = pageNum;
+
             return View(products);
         }
 

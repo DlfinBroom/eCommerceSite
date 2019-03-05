@@ -21,12 +21,13 @@ namespace eCommerceSite.Controllers {
             int pageNum = (id.HasValue) ? id.Value : 1;
             const int PageSize = 3;
 
-            List<Product> products = ProductDB.GetProductsByPage(pageNum, PageSize, context);
+            List<Product> Products = ProductDB.GetProductsByPage(pageNum, PageSize, context);
+            int MaxPage = ProductDB.GetMaxPage(context, PageSize);
+            int CurrPage = pageNum;
 
-            ViewData["MaxPage"] = ProductDB.GetMaxPage(context, PageSize);
-            ViewData["CurrPageNum"] = pageNum;
+            var Pivm = new ProductIndexViewModel(Products, MaxPage, CurrPage);
 
-            return View(products);
+            return View(Pivm);
         }
 
         [HttpGet]

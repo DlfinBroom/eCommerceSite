@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Product>
+﻿@model ProductIndexViewModel
 @{
     ViewData["Title"] = "Product Catalog";
 }
@@ -7,73 +7,25 @@
 
 <h1>All available products</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(m => m.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(m => m.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(m => m.Category)
-            </th>
-            @*Add Description*@
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Product product in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(m => product.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => product.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(m => product.Category)
-                </td>
-                <td>
-                    <a class="btn btn-secondary" 
-                       asp-action="Edit" 
-                       asp-route-id="@product.ProductID"
-                       >Edit Product</a>
-
-                    <a class="btn btn-danger" 
-                       asp-action="Delete" 
-                       asp-route-id="@product.ProductID"
-                       >Delete Product</a>
-
-                    <a class="btn btn-primary" 
-                       asp-action="Add" 
-                       asp-controller="Cart" 
-                       asp-route-id="@product.ProductID"
-                       >Add to Cart</a>
-
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@await  Html.PartialAsync("_ProductList", Model.Products)
 
 <ul class="pagination">
-    @*Next*@
-    @if (1 == (int)ViewData["CurrPageNum"]) {
+    @*Previous*@
+    @if (1 == Model.CurrPage) {
         <li class="page-item active">
             <span class="page-link">Previous</span>
         </li>
     }
     else {
-        int previousPage = (int)ViewData["CurrPageNum"] - 1;
+        int previousPage = Model.CurrPage - 1;
         <li class="page-item">
             <a class="page-link" asp-action="Index" asp-route-id="@previousPage">Previous</a>
         </li>
     }
 
     @*All Pages*@
-    @for (int a = 1; a <= (int)ViewData["MaxPage"]; a++) {
-        if (a == (int)ViewData["CurrPageNum"]) {
+    @for (int a = 1; a <= Model.MaxPage; a++) {
+        if (a == Model.CurrPage) {
             <li class="page-item active">
                 <span class="page-link">@a</span>
             </li>
@@ -86,13 +38,13 @@
     }
 
     @*Next*@
-    @if ((int)ViewData["CurrPageNum"] == (int)ViewData["MaxPage"]) {
+    @if (Model.CurrPage == Model.MaxPage) {
         <li class="page-item active">
             <span class="page-link">Next</span>
         </li>
     }
     else {
-        int nextPage = (int)ViewData["CurrPageNum"] + 1;
+        int nextPage = Model.CurrPage + 1;
         <li class="page-item">
             <a class="page-link" asp-action="Index" asp-route-id="@nextPage">Next</a>
         </li>

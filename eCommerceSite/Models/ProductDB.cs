@@ -31,6 +31,24 @@ namespace eCommerceSite.Models {
                 .ToList();
         }
 
+        public static List<Product> SearchProducts(SearchCriteria criteria, CommerceContext context) {
+
+            IQueryable<Product> allProducts = from p in context.Products select p;
+
+            if (criteria.LowPrice.HasValue) {
+                allProducts = from p in allProducts
+                              where p.Price >= criteria.LowPrice
+                              select p;
+            }
+            if (criteria.HighPrice.HasValue) {
+                allProducts = from p in allProducts
+                              where p.Price <= criteria.HighPrice
+                              select p;
+            }
+
+        }
+
+
         /// <summary>
         /// Returns the total number of pages needed 
         /// to display all products given the page size

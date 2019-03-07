@@ -19,7 +19,7 @@ namespace eCommerceSite.Controllers {
             // List<Product> products = ProductDB.GetProducts(context);
 
             int pageNum = (id.HasValue) ? id.Value : 1;
-            const int PageSize = 3;
+            const int PageSize = 7;
 
             List<Product> Products = ProductDB.GetProductsByPage(pageNum, PageSize, context);
             int MaxPage = ProductDB.GetMaxPage(context, PageSize);
@@ -71,6 +71,14 @@ namespace eCommerceSite.Controllers {
             context.Products.Remove(pro);
             context.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Search() {
+            SearchCriteria search = new SearchCriteria();
+            search.Products = new List<Product>();
+
+            return View(search);
         }
     }
 }

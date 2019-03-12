@@ -74,9 +74,8 @@ namespace eCommerceSite.Controllers {
         }
 
         [HttpGet]
-        public IActionResult Search() {
-            SearchCriteria search = new SearchCriteria();
-            search.Products = new List<Product>();
+        public IActionResult Search(SearchCriteria search) {
+            search.Products = ProductDB.SearchProducts(search, context);
 
             return View(search);
         }

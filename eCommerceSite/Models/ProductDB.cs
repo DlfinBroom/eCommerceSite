@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,12 +24,13 @@ namespace eCommerceSite.Models {
             return pro;
         }
 
-        public static List<Product> GetProductsByPage(int pageNum, int pageSize, CommerceContext context) {
-            return context.Products
+        public static async Task<List<Product>> GetProductsByPage(int pageNum, int pageSize, CommerceContext context) {
+            return await context
+                .Products
                 .OrderBy(p => p.Name)
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize)
-                .ToList();
+                .ToListAsync();
         }
 
         public static List<Product> SearchProducts(SearchCriteria criteria, CommerceContext context) {
@@ -45,9 +47,18 @@ namespace eCommerceSite.Models {
                               where p.Price <= criteria.HighPrice
                               select p;
             }
-
+            if (criteria.Category != null) {
+                allProducts = from p in allProducts
+                              where p.Category == criteria.Category
+                              select p;
+            }
+            if(criteria.Name != null) {
+                allProducts = from p in allProducts
+                              where p.Name.Contains(criteria.Name)
+                              select p;
+            }
+            return allProducts.ToList();
         }
-
 
         /// <summary>
         /// Returns the total number of pages needed 

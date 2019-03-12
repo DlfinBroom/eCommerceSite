@@ -10,14 +10,16 @@ namespace eCommerceSite.Models {
         /// <summary>
         /// The partial matching product name
         /// </summary>
+        [RegularExpression("[A-Za-z]+", ErrorMessage = "name cannot contain any numbers or special characters")]
         public string Name { get; set; }
 
+        [RegularExpression("[A-Za-z]+", ErrorMessage = "category cannot contain any numbers or special characters")]
         public string Category { get; set; }
 
-        [Range(0, 100)]
+        [Range(0, double.MaxValue, ErrorMessage = "low price cannot be a negative number")]
         public double? LowPrice { get; set; }
 
-        [Range(0.01, double.MaxValue)]
+        [Range(0.01, double.MaxValue, ErrorMessage = "max price cannot be less then 0.01")]
         public double? HighPrice { get; set; }
 
         /// <summary>
